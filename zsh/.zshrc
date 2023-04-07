@@ -21,7 +21,8 @@ fi
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-ZSH_THEME="gnzh"
+# .oh-my-zsh/themes/joytide.zsh-theme
+ZSH_THEME="joytide"
 
 zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
