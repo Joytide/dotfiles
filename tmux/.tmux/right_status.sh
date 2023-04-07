@@ -1,19 +1,16 @@
 #!/bin/bash
 
 output=""
-for iface in $(ip -o link show | awk -F': ' '{print $2}') ; do
-    if [[ $iface == lo* ]]; then
-        continue  # skip loopback interface
-    fi
-    ip_addr=$(ip -o -4 addr show dev $iface | awk '{print $4}')
+while read -r ip iface ip_addr; do
     if [ -n "$ip_addr" ]; then
-        iface_short=$(echo $iface | cut -c 1-6)
-        output+="[$iface_short: ${ip_addr%/*}] - "
+        iface_short=$(echo $iface | cut -c 1-4)
+        output+="[$iface_short:${ip_addr%/*}] - "
     fi
-done
+done < <(ip -o -4 addr show | awk '{split($2,a,":"); if (a[1] == "lo" || a[1] ~ /^br-/) next; print $2, a[1], $4}')
 
 if [ -n "$output" ]; then
-    echo "${output::-3} |"
+    echo -n "${output::-3}"
+    echo " |"
 else
-    echo "[Pas de connexion aux Internet Mondiaux]"
+    echo -n "[Pas de connexion aux Internet Mondiaux]"
 fi
