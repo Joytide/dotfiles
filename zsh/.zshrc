@@ -22,6 +22,7 @@ fi
 export ZSH="$HOME/.oh-my-zsh"
 
 # .oh-my-zsh/themes/joytide.zsh-theme
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 ZSH_THEME="joytide"
 
 zstyle ':omz:update' mode reminder  # just remind me to update when it's time
@@ -94,3 +95,6 @@ fi
 # More paths
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$PATH:/usr/sbin"
+
+setopt noincappendhistory
+setopt nosharehistory

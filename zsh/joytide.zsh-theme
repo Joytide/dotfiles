@@ -37,7 +37,7 @@ GNZH_THEME_VIRTUALENV_PROMPT_PREFIX=""
 GNZH_THEME_VIRTUALENV_PROMPT_SUFFIX=""
 virtenv_prompt() {
 	[[ -n "${VIRTUAL_ENV:-}" ]] || return ""
-	echo "%{$fg[magenta]%}${VIRTUAL_ENV:t}%{$reset_color%}%"
+	echo "\033[1;35m~${VIRTUAL_ENV:t}~%{$reset_color%}%"
 }
 
 
