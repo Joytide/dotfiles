@@ -47,6 +47,15 @@ if [ -x /usr/bin/dircolors ]; then
     alias ip='ip -c'
 fi
 
+git() {
+    if [[ $@ == "poule" ]]; then
+        command git pull
+    else
+        command git "$@"
+    fi
+}
+
+
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
@@ -58,10 +67,12 @@ alias cryptohack="docker run -p 127.0.0.1:8888:8888 -it hyperreality/cryptohack"
 alias x='xdg-open'
 alias htb='sudo openvpn /home/joytide/htb/lab_Joytide.ovpn'
 alias clipboard='xclip -selection clipboard'
-alias nano='vim'
-alias metasploit="docker run --rm -it -p 4444:4444 -p 80:80 -p 8080:8080 -p 443:443 -p 445:445 -p 8081:8081 strm/metasploit"
-
-
+alias lock="~/.config/i3/blur"
+alias wpscan="docker run -it --rm wpscanteam/wpscan"
+alias rustscan='docker run -it --rm --name rustscan rustscan/rustscan:2.1.1'
+alias testssl='docker run --rm -ti  drwetter/testssl.sh'
+alias neo4j="docker run --name neo4j -p7474:7474 -p7687:7687 -d -v $HOME/neo4j/data:/data -v $HOME/neo4j/logs:/logs -v $HOME/neo4j/import:/var/lib/neo4j/import -v $HOME/neo4j/plugins:/plugins --env NEO4J_AUTH=neo4j/neo4j neo4j:latest"
+alias venvs="ls -alh ~/venvs"
 
 function volatility() {
   docker run -it --rm -v $(pwd):/data:ro -v $(pwd)/profiles:/plugins blacktop/volatility --plugins=/plugins $@
@@ -79,6 +90,7 @@ function activate() {
 if [ -f "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
 fi
+
 # Ruby
 if [ -d "$HOME/.rbenv" ]; then
   export PATH="$HOME/.rbenv/bin:$PATH"
@@ -87,14 +99,25 @@ if [ -d "$HOME/.rbenv" ]; then
   export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/opt/openssl-1.1.1o/"
 fi
 
+# Node
+if [ -d "$HOME/.nvm" ]; then
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
+
 # Go
 if [ -d "$HOME/go" ]; then
   export PATH="$HOME/go/bin:$PATH"
 fi
 
-# More paths
+# More paths (pipx)
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$PATH:/usr/sbin"
 
-setopt noincappendhistory
-setopt nosharehistory
+#setopt noincappendhistory
+#setopt nosharehistory
+
+
+
+eval "$(zoxide init zsh --cmd cd)"

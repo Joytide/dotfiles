@@ -1,4 +1,4 @@
-# Based on gnzh theme
+# Based on gnzh theme, to be placed in ~/.oh-my-zsh/themes/
 
 setopt prompt_subst
 
